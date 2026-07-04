@@ -47,13 +47,12 @@ app.get("/listings/:id" , async (req,res) => {
     res.render("listings/show.ejs", {listing});
 });
 //create route
-app.post("/listings" , async(req,res) =>{
-    //  1st way ==let{tittle,description,image,price,country,location} = req.body;
-const newListing = new Listing(req.body.listing);
-await newListing.save();
-res.redirect("/listings");
-});
+app.post("/listings", async (req, res) => {
+ const newListing = new Listing(req.body.listing);
+    await newListing.save();
 
+    res.redirect("/listings");
+});
 //edit route
 app.get("/listings/:id/edit" , async(req,res)=>{
      let {id} = req.params;
@@ -72,9 +71,11 @@ app.put("/listings/:id", async (req,res)=>{
 app.delete("/listings/:id", async (req,res)=>{
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
+
     res.redirect("/listings");
 });
+
+
 
 // app.get("/testListing", async (req,res) => {
 //     let sampleListing = new Listing({
